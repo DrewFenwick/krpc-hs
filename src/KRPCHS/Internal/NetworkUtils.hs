@@ -13,8 +13,8 @@ import KRPCHS.Internal.SerializeUtils
 
 import Control.Monad
 
-import Network.Socket hiding (send, recv, sendTo, recvFrom)
-import Network.Socket.ByteString
+import Network.Socket
+import Network.Socket.ByteString hiding (recvMsg, sendMsg)
 
 import qualified Data.ByteString        as BS
 import qualified Data.ByteString.Lazy   as BL
@@ -68,7 +68,7 @@ recvMsg sock = do
                 let sz'  = BS.append sz b
                     more = testBit (BS.head b) 7
                 if more then recvSize sz'
-                        else either (fail "Malformed message") (return) (decodePb $ BL.fromStrict sz')
+                        else either (const $ fail "Malformed message") return (decodePb $ BL.fromStrict sz')
 
 
 sendMsg :: (ReflectDescriptor msg, Wire msg) => Socket -> msg -> IO ()
