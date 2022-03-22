@@ -7,7 +7,7 @@ author:              Cahu
 copyright:           2016 Cahu
 build-type:          Simple
 -- extra-source-files:
-cabal-version:       >=1.10
+cabal-version:       2.0
 
 library
   hs-source-dirs:      src
